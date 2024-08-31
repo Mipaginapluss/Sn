@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">El Restaurante - Presentación del Libro</title>
+
+    <!-- Metaetiquetas vacías para ser llenadas dinámicamente -->
+    <meta name="description" content="">
+    <meta name="keywords" content="El Restaurante, libro de cocina, alta gastronomía, Juan Pérez, recetas">
+    <meta name="author" content="Juan Pérez">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="https://mipaginapluss.github.io/Seo/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 id="book-title">Presentación del Libro</h1>
+    </header>
+
+    <section class="intro">
+        <img id="book-image" src="" alt="Portada del libro">
+        <div class="book-details">
+            <h2>Sobre el Libro</h2>
+            <p id="book-description"></p>
+        </div>
+    </section>
+
+    <section class="author">
+        <h2>Sobre el Autor</h2>
+        <p>El autor, Juan Pérez, es un renombrado chef con más de 20 años de experiencia...</p>
+    </section>
+
+    <section class="purchase">
+        <h2>Compra el Libro</h2>
+        <button id="buy-button">Comprar Ahora</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 "El Restaurante". Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Hacer la solicitud para obtener los datos
+        fetch('https://sheetdb.io/api/v1/cvnbs97ws1jjr')
+        .then(response => response.json())
+        .then(data => {
+            // Suponiendo que hay solo un registro, acceder al primer elemento del array
+            if(data.length > 0) {
+                const record = data[0];
+
+                // Metaetiquetas
+                document.querySelector('meta[name="description"]').setAttribute('content', record.descripción);
+                document.querySelector('meta[property="og:title"]').setAttribute('content', record.título);
+                document.querySelector('meta[property="og:description"]').setAttribute('content', record.descripción);
+                document.querySelector('meta[property="og:image"]').setAttribute('content', record.enlace);
+                document.querySelector('meta[name="twitter:title"]').setAttribute('content', record.título);
+                document.querySelector('meta[name="twitter:description"]').setAttribute('content', record.descripción);
+                document.querySelector('meta[name="twitter:image"]').setAttribute('content', record.enlace);
+
+                // Contenido del cuerpo de la página
+                document.getElementById('page-title').innerText = record.título;
+                document.getElementById('book-title').innerText = record.título;
+                document.getElementById('book-image').setAttribute('src', record.enlace);
+                document.getElementById('book-description').innerText = record.descripción;
+            }
+        })
+        .catch(error => console.error('Error al obtener los datos:', error));
+    </script>
+</body>
+</html>
